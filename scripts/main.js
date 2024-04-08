@@ -128,3 +128,5 @@ if (description !== "") {
 } else {
     console.error("Ongeldige keuze. Probeer het opnieuw door de pagina te verversen.");
 }
+
+//bedankt voor de review//
