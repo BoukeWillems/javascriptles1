@@ -71,4 +71,60 @@ const departments = {
     }
 }
 
-console.log(departments);
+const userInput = prompt(`Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service].`);
+const lowercaseInput = userInput.toLowerCase();
+let description = "";
+switch (lowercaseInput) {
+    case 'marketing':
+        description = departments.marketing.description;
+        break;
+    case 'sales':
+        description = departments.sales.description;
+        break;
+    case 'customer-service':
+        description = departments["customer-service"].description;
+        break;
+    default:
+        console.error("Ongeldige keuze. Probeer het opnieuw door de pagina te verversen.");
+}
+
+
+const departmentDescriptionElement = document.getElementById('department-description');
+const roleTitleElement = document.getElementById('role-title');
+const roleDescriptionElement = document.getElementById('role-description');
+const errorMessageElement = document.getElementById('error-message');
+
+
+departmentDescriptionElement.textContent = description;
+
+if (description !== "") {
+    let promptMessage = `Je koos ${lowercaseInput}. Over welke functie wil je meer weten? Voer een getal tussen 0 en ${departments[lowercaseInput].jobs.length - 1} in.\n`;
+
+
+    departments[lowercaseInput].jobs.forEach((job, index) => {
+        promptMessage += `${index}: ${job.title}\n`;
+    });
+
+    const userInputRole = prompt(promptMessage);
+
+
+    const jobIndex = parseInt(userInputRole);
+
+
+    if (!isNaN(jobIndex) && jobIndex >= 0 && jobIndex < departments[lowercaseInput].jobs.length) {
+
+        const selectedJob = departments[lowercaseInput].jobs[jobIndex];
+
+
+        roleTitleElement.textContent = selectedJob.title;
+        roleDescriptionElement.textContent = selectedJob.description;
+
+
+        errorMessageElement.textContent = "";
+    } else {
+
+        errorMessageElement.textContent = "Ongeldige keuze. Voer alstublieft een geldig getal in.";
+    }
+} else {
+    console.error("Ongeldige keuze. Probeer het opnieuw door de pagina te verversen.");
+}
